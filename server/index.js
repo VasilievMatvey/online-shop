@@ -7,7 +7,7 @@ import fileUpload from "express-fileupload";
 import cookieParser from "cookie-parser";
 import router from "./routes/index.js";
 import errorMiddleware from "./middleware/errorMiddleware.js";
-
+import bodyParser from "body-parser";
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -20,6 +20,8 @@ app.use(
 );
 // middleware для работы с json
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
 // middleware для статики (img, css)
 app.use(express.static("static"));
 // middleware для загрузки файлов

@@ -8,7 +8,7 @@ class CatalogStore {
   _brand = null; // выбранный бренд
   _page = 1; // текущая страница
   _count = 0; // сколько всего товаров
-  _limit = 2; // товаров на страницу
+  _limit = 8; // товаров на страницу
 
   constructor() {
     makeAutoObservable(this);

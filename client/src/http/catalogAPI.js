@@ -134,3 +134,15 @@ export const deleteProperty = async (productId, id) => {
   );
   return data;
 };
+
+// reviews
+export const fetchAllReviews = async (id) => {
+  const { data } = await guestInstance.get(`review/product/${id}`);
+
+  return data;
+};
+
+export const createReview = async (id, review) => {
+  const { data } = await authInstance.post(`review/product/${id}`, review);
+  return data;
+};

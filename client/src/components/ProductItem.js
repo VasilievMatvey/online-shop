@@ -1,5 +1,7 @@
-import { Card, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Card, Col, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { StarIcon } from "@chakra-ui/icons";
 import {
   SimpleGrid,
   Stack,
@@ -10,7 +12,17 @@ import {
   Text,
   Divider,
 } from "@chakra-ui/react";
+import {
+  fetchOneProduct,
+  fetchProdRating,
+  fetchAllReviews,
+} from "../http/catalogAPI.js";
 const ProductItem = ({ data }) => {
+  const [rating, setRating] = useState(null);
+  useEffect(() => {
+    fetchProdRating(data.id).then((data) => setRating(data));
+  }, [data.id]);
+  console.log(rating);
   const navigate = useNavigate();
   return (
     <Box
@@ -61,6 +73,27 @@ const ProductItem = ({ data }) => {
           Цена:
           {data.price}
           руб.
+        </Box>
+        <Box display="flex" mt="2" alignItems="center">
+          {rating ? (
+            Array(5)
+              .fill("")
+              .map((_, i) => (
+                <StarIcon
+                  key={i}
+                  color={i < rating.rating ? "teal.500" : "gray.300"}
+                />
+              ))
+          ) : (
+            <Spinner animation="border" />
+          )}
+          {rating ? (
+            <Box as="span" ml="2" color="gray.600" fontSize="sm">
+              Отзывов: {rating.votes}
+            </Box>
+          ) : (
+            <Spinner animation="border" />
+          )}
         </Box>
       </Box>
     </Box>
