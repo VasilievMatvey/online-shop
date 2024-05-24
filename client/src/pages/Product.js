@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { SimpleGrid, Button } from "@chakra-ui/react";
 import ReviewCard from "../components/ReviewCard";
 import AddReviewModal from "../components/AddReviewModal";
+import { observer } from "mobx-react-lite";
 // import { fetchAllReviews, createReview } from "../http/reviewAPI.js";
 import {
   fetchOneProduct,
@@ -14,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { append } from "../http/basketAPI.js";
 import { AppContext } from "../components/AppContext.js";
 
-const Product = () => {
+const Product = observer(() => {
   const { id } = useParams();
   const { user, basket } = useContext(AppContext);
   const [product, setProduct] = useState(null);
@@ -33,7 +34,6 @@ const Product = () => {
   const handleSubmitReview = (reviewData) => {
     try {
       createReview(id, { ...reviewData, userId: user.id });
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -56,7 +56,6 @@ const Product = () => {
   if (!product) {
     return <Spinner animation="border" />;
   }
-
   return (
     <Container>
       <Row className="mt-3 mb-3">
@@ -148,6 +147,6 @@ const Product = () => {
       )}
     </Container>
   );
-};
+});
 
 export default Product;

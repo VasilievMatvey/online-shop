@@ -1,5 +1,6 @@
 import ReviewModel from "../models/Reviews.js";
 import AppError from "../errors/AppError.js";
+import RatingController from "../controllers/Rating.js";
 
 class Review {
   async getAll(req, res, next) {
